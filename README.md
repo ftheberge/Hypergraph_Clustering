@@ -42,7 +42,7 @@ def linear(d,c):
     return c/d if c>d/2 else 0
 ```
 
-where d is the edge size, and c>d the number of nodes in the majority class.
+where d is the edge size, and d>=c>d/2 the number of nodes in the majority class.
 
 ### Two-section graph
 
