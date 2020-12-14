@@ -10,7 +10,7 @@ We build the hypergraph HG using:
 HG = hnx.Hypergraph(dict(enumerate(Edges)))
 ```
 where 'Edges' is a list of sets; edges are then indexed as 0-based integers, so to preserve unique ids, we represent nodes as strings. 
-For example Edges[0] = {'0','2'}
+For example Edges[0] = {'A','B','C'}
 
 ### Modularity
 
