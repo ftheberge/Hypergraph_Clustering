@@ -13,6 +13,8 @@ Required packages:
 * pip install partition-igraph
 * pip install hypernext
 
+Game of thrones dataset built from: https://github.com/jeffreylancaster/game-of-thrones
+
 ## Summary of functions for HNX hypergraphs
 
 We build the hypergraph HG using:
@@ -40,7 +42,7 @@ def linear(d,c):
     return c/d if c>d/2 else 0
 ```
 
-where d is the edge size, and c>d the number of nodes in the majority class.
+where d is the edge size, and d>=c>d/2 the number of nodes in the majority class.
 
 ### Two-section graph
 
