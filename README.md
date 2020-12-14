@@ -1,7 +1,15 @@
 # Hypergraph_Clustering
-Modularity and clustering for hyper-graphs with HyperNetX (HNX)
+Modularity and clustering for hypergraphs using HyperNetX (HNX) represention
+
+HyperNetX details can be found at: https://github.com/pnnl/HyperNetX
 
 See example code in the Notebook directory: https://github.com/ftheberge/Hypergraph_Clustering/blob/main/Notebooks/Hypergraph_Clustering.ipynb
+
+Required packages:
+
+* pip install python-igraph
+* pip install partition-igraph
+* pip install hypernext
 
 ## Summary of functions for HNX hypergraphs
 
@@ -62,7 +70,6 @@ where 'wcd' is the the weight function (default = 'linear') and delta is the con
 
 ### References:
 
-HyperNetX package: https://github.com/pnnl/HyperNetX
 
 [1] Kumar T., Vaidyanathan S., Ananthapadmanabhan H., Parthasarathy S., Ravindran B. (2020) A New Measure of Modularity in Hypergraphs: Theoretical Insights and Implications for Effective Clustering. In: Cherifi H., Gaito S., Mendes J., Moro E., Rocha L. (eds) Complex Networks and Their Applications VIII. COMPLEX NETWORKS 2019. Studies in Computational Intelligence, vol 881. Springer, Cham. https://doi.org/10.1007/978-3-030-36687-2_24
 
