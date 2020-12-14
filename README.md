@@ -13,6 +13,8 @@ Required packages:
 * pip install partition-igraph
 * pip install hypernext
 
+Game of thrones dataset built from: https://github.com/jeffreylancaster/game-of-thrones
+
 ## Summary of functions for HNX hypergraphs
 
 We build the hypergraph HG using:
