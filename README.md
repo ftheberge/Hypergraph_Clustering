@@ -1,7 +1,7 @@
 # Hypergraph_Clustering
 Modularity and clustering for hyper-graphs with HyperNetX (HNX)
 
-See example code in the Notebook directory
+See example code in the Notebook directory: https://github.com/ftheberge/Hypergraph_Clustering/blob/main/Notebooks/Hypergraph_Clustering.ipynb
 
 ## Summary of functions for HNX hypergraphs
 
