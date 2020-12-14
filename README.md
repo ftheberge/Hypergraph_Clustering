@@ -1,5 +1,7 @@
 # Hypergraph_Clustering
-Modularity and clustering for hypergraphs using HyperNetX (HNX) represention
+Modularity and clustering for hypergraphs using HyperNetX (HNX) representation
+
+**This is work in progress**
 
 HyperNetX details can be found at: https://github.com/pnnl/HyperNetX
 
@@ -68,8 +70,7 @@ A = HNX_LastStep(HG, L, wdc=linear, delta = .01)
 
 where 'wcd' is the the weight function (default = 'linear') and delta is the convergence stopping criterion. Returned partition is a list of sets.
 
-### References:
-
+### Papers:
 
 [1] Kumar T., Vaidyanathan S., Ananthapadmanabhan H., Parthasarathy S., Ravindran B. (2020) A New Measure of Modularity in Hypergraphs: Theoretical Insights and Implications for Effective Clustering. In: Cherifi H., Gaito S., Mendes J., Moro E., Rocha L. (eds) Complex Networks and Their Applications VIII. COMPLEX NETWORKS 2019. Studies in Computational Intelligence, vol 881. Springer, Cham. https://doi.org/10.1007/978-3-030-36687-2_24
 
