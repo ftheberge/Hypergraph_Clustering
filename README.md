@@ -11,7 +11,7 @@ Required packages:
 
 * pip install python-igraph
 * pip install partition-igraph
-* pip install hypernext
+* pip install hypernetx
 
 Game of thrones dataset built from: https://github.com/jeffreylancaster/game-of-thrones
 
