@@ -60,7 +60,7 @@ def HNX_precompute(HG):
 
 ################################################################################
 
-## some weight function for d-edges with c-majority
+## some weight function 'wdc' for d-edges with c-majority
 
 ## default: linear w.r.t. c
 def linear(d,c):
@@ -115,9 +115,9 @@ def EdgeContribution(HG, A, wdc):
 ## HG: HNX hypergraph
 ## A: partition (list of sets)
 ## wcd: weight function (ex: strict, majority, linear)
-def HNX_modularity(HG, A, wcd=linear):
+def HNX_modularity(HG, A, wdc=linear):
     Pr = compute_partition_probas(HG, A)
-    return EdgeContribution(HG, A, wcd) - DegreeTax(HG, Pr, wcd)
+    return EdgeContribution(HG, A, wdc) - DegreeTax(HG, Pr, wdc)
 
 ################################################################################
 
