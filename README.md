@@ -34,7 +34,7 @@ HNX_precompute(HG)
 
 To compute H-modularity for HG w.r.t. partition A (list of sets covering the vertices):
 ```python
-HNX_modularity(HG, A, wcd=linear)
+HNX_modularity(HG, A, wdc=linear)
 ```
 where 'wcd' is the weight function (default = 'linear'). Other choices are 'strict' and 'majority', or any user-supplied function with the following format:
 ```python
