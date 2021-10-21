@@ -3,6 +3,7 @@ import numpy as np
 from functools import reduce
 import igraph as ig
 import itertools
+from scipy.special import comb
 
 ################################################################################
 
@@ -25,38 +26,48 @@ def part2dict(A):
 
 ################################################################################
 
-def factorial(n): 
-    if n < 2: return 1
-    return reduce(lambda x, y: x*y, range(2, int(n)+1))
-
 ## Precompute soe values on HNX hypergraph for computing qH faster
 def HNX_precompute(HG):
+    """
+    Precompute some values on hypergraph for faster computing of hypergraph modularity. The following attributes will be set:
+
+    v.strength: the weighted degree for each v in HG.nodes
+    HG.d_weights
+    node strength (i.e. weighted degree), d-weights (total edge weigths for each edge cardinality d) and binomial coefficients. 
+
+    Parameters
+    ----------
+    HG : Hypergraph
+
+    """
+    H = HG.remove_singletons()
     ## 1. compute node strenghts (weighted degrees)
-    for v in HG.nodes:
-        HG.nodes[v].strength = 0
-    for e in HG.edges:
+    for v in H.nodes:
+        H.nodes[v].strength = 0
+    for e in H.edges:
         try:
-            w = HG.edges[e].weight
+            w = H.edges[e].weight
         except:
             w = 1
             ## add unit weight if none to simplify other functions
-            HG.edges[e].weight = 1 
-        for v in list(HG.edges[e]):
-            HG.nodes[v].strength += w
+            H.edges[e].weight = 1 
+        for v in list(H.edges[e]):
+            H.nodes[v].strength += w
     ## 2. compute d-weights        
-    ctr = Counter([len(HG.edges[e]) for e in HG.edges])
+    ctr = Counter([len(H.edges[e]) for e in H.edges])
     for k in ctr.keys():
         ctr[k]=0
-    for e in HG.edges:
-        ctr[len(HG.edges[e])] += HG.edges[e].weight
-    HG.d_weights = ctr
-    HG.total_weight = sum(ctr.values())
+    for e in H.edges:
+        ctr[len(H.edges[e])] += H.edges[e].weight
+    H.d_weights = ctr
+    H.total_weight = sum(ctr.values())
     ## 3. compute binomial coeffcients (modularity speed-up)
     bin_coef = {}
-    for n in HG.d_weights.keys():
+    for n in H.d_weights.keys():
         for k in np.arange(n//2+1,n+1):
-            bin_coef[(n,k)] = factorial(n)/(factorial(k)*factorial(n-k))
-    HG.bin_coef = bin_coef
+            bin_coef[(n,k)] = comb(n, k, exact=True)
+    H.bin_coef = bin_coef
+    return H
 
 ################################################################################
 
@@ -126,18 +137,19 @@ def HNX_2section(HG):
     s = []
     for e in HG.edges:
         E = HG.edges[e]
-         ## random-walk 2-section (preserve nodes' weighted degrees)
-        try:
-            w = HG.edges[e].weight/(len(E)-1)
-        except:
-            w = 1/(len(E)-1)
-        s.extend([(k[0],k[1],w) for k in itertools.combinations(E,2)])
+        if len(E)>1:
+            ## random-walk 2-section (preserve nodes' weighted degrees)
+            try:
+                w = HG.edges[e].weight/(len(E)-1)
+            except:
+                w = 1/(len(E)-1)
+            s.extend([(k[0],k[1],w) for k in itertools.combinations(E,2)])
     G = ig.Graph.TupleList(s,weights=True).simplify(combine_edges='sum')
     return G
 
 ################################################################################
 
-def HNX_Kumar(HG, delta=.01):
+def HNX_Kumar(HG, delta=.01, verbose=False):
 
     ## weights will be modified -- store initial weights
     W = [e.weight for e in HG.edges()]        
@@ -169,12 +181,14 @@ def HNX_Kumar(HG, delta=.01):
         for comm in CG.as_cover():
             CH.append(set([G.vs[x]['name'] for x in comm]))
         ctr += 1
+        if verbose:
+            print(ctr,diff)
         if ctr>50: ## this process sometimes gets stuck -- set limit
             break
     G.vs['part'] = CG.membership
     for e in HG.edges:
         HG.edges[e].weight = W[e]        
-    return {v['name']:v['part'] for v in G.vs}
+    return dict2part({v['name']:v['part'] for v in G.vs})
 
 ################################################################################
 
