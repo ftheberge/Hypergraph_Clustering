@@ -17,19 +17,19 @@ Game of thrones dataset built from: https://github.com/jeffreylancaster/game-of-
 
 ## Summary of functions for HNX hypergraphs
 
-We build the hypergraph HG using:
+Given a list of edges, let's build the hypergraph H using hnx:
 ```python
-HG = hnx.Hypergraph(dict(enumerate(Edges)))
+H = hnx.Hypergraph(dict(enumerate(Edges)))
 ```
 where 'Edges' is a list of sets; edges are then indexed as 0-based integers, so to preserve unique ids, we represent nodes as strings. 
 For example Edges[0] = {'A', 'B', 'C'}
 
 ### Modularity
 
-The following function is called to compute required quantities for modularity and clustering:
+The following pre-processing function is called to compute required quantities for modularity and clustering:
 
 ```python
-HNX_precompute(HG)
+HG = HNX_precompute(H)
 ```
 
 To compute H-modularity for HG w.r.t. partition A (list of sets covering the vertices):
@@ -76,7 +76,7 @@ where 'wcd' is the the weight function (default = 'linear') and delta is the con
 
 [1] Kumar T., Vaidyanathan S., Ananthapadmanabhan H., Parthasarathy S., Ravindran B. (2020) A New Measure of Modularity in Hypergraphs: Theoretical Insights and Implications for Effective Clustering. In: Cherifi H., Gaito S., Mendes J., Moro E., Rocha L. (eds) Complex Networks and Their Applications VIII. COMPLEX NETWORKS 2019. Studies in Computational Intelligence, vol 881. Springer, Cham. https://doi.org/10.1007/978-3-030-36687-2_24
 
-[2] B. Kaminski, P. Pralat and F. Théberge, Community Detection Algorithm Using Hypergraph Modularity, to appear in the proceedings of Complex Networks 2020, Springer.
+[2] Kamiński B., Prałat P. and Théberge F. “Community Detection Algorithm Using Hypergraph Modularity”. In: Benito R.M., Cherifi C., Cherifi H., Moro E., Rocha L.M., Sales-Pardo M. (eds) Complex Networks & Their Applications IX. COMPLEX NETWORKS 2020. Studies in Computational Intelligence, vol 943. Springer, Cham. https://doi.org/10.1007/978-3-030-65347-7_13
 
-[3] Clustering via hypergraph modularity, Bogumił Kamiński, Valérie Poulin, Paweł Prałat , Przemysław Szufel, François Théberge, 2019, https://doi.org/10.1371/journal.pone.0224307
+[3] Kamiński B., Poulin V., Prałat P., Szufel P. and Théberge F. “Clustering via hypergraph modularity”, Plos ONE 2019, https://doi.org/10.1371/journal.pone.0224307
 
