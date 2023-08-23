@@ -1,78 +1,55 @@
 # Hypergraph_Clustering
 Modularity and clustering for hypergraphs using HyperNetX (HNX) representation
 
-**This is work in progress**
+**This new version is a re-write as of the new version 2 of HNX, tested with version 2.0.3**
 
-HyperNetX details can be found at: https://github.com/pnnl/HyperNetX
+HNX details can be found at: https://github.com/pnnl/HyperNetX
 
-See example code in the Notebook directory: https://github.com/ftheberge/Hypergraph_Clustering/blob/main/Notebooks/Hypergraph_Clustering.ipynb
+# Required packages
 
-Required packages:
-
-* pip install python-igraph
-* pip install partition-igraph
+* pip install igraph
 * pip install hypernetx
 
-Game of thrones dataset built from: https://github.com/jeffreylancaster/game-of-thrones
+# Summary of new/old functions for modularity and clustering
 
-## Summary of functions for HNX hypergraphs
+With the new data structure in version 2 of HNX, we can achieve considerable speed-ups with functions in the **hypergraph_modularity** module. 
+One of the main change is that we no longer need to precompute some attributes before calling the **modularity** function, which is now much faster. 
+The same is true for the simple **last_step** heuristic algorithm.
 
-Given a list of edges, let's build the hypergraph H using hnx:
-```python
-H = hnx.Hypergraph(dict(enumerate(Edges)))
-```
-where 'Edges' is a list of sets; edges are then indexed as 0-based integers, so to preserve unique ids, we represent nodes as strings. 
-For example Edges[0] = {'A', 'B', 'C'}
+As illustrated in this [notebook](https://github.com/ftheberge/Hypergraph_Clustering/blob/main/Notebooks/Hypergraph_Clustering_HNX2.ipynb), we can see a speedup of a few order of magnitude; 
+for example with a 1000-node graph, pre-computation takes 19s and modularity evaluation 6s; this whole process is now down to 53ms!
 
-### Modularity
+## Unchanged functions (already in HNX hypergraph_modularity module):
 
-The following pre-processing function is called to compute required quantities for modularity and clustering:
+- dict2part(D)
+- part2dict(A)
+- linear(d, c)
+- majority(d, c)
+- strict(d, c)
+- two_section(HG)
+- kumar(HG, delta=0.01)
 
-```python
-HG = HNX_precompute(H)
-```
+## Functions no longer required (to be removed from HNX hypergraph_modularity module)
 
-To compute H-modularity for HG w.r.t. partition A (list of sets covering the vertices):
-```python
-HNX_modularity(HG, A, wdc=linear)
-```
-where 'wcd' is the weight function (default = 'linear'). Other choices are 'strict' and 'majority', or any user-supplied function with the following format:
-```python
-def linear(d,c):
-    return c/d if c>d/2 else 0
-```
+- precompute_attributes(H)
+- _compute_partition_probas(HG, A)
+- _degree_tax(HG, Pr, wdc)
+- _edge_contribution(HG, A, wdc)
+- _delta_ec(HG, P, v, a, b, wdc)
+- _bin_ppmf(d, c, p)
+- _delta_dt(HG, P, v, a, b, wdc)
 
-where d is the edge size, and d>=c>d/2 the number of nodes in the majority class.
+## Functions with new version (temporarily renamed with prefix “new_”; to be updated in HNX hypergraph_modularity module)
 
-### Two-section graph
+- modularity(HG, A, wdc=linear)
+- last_step(HG, L, wdc=linear, delta=0.01)
 
-To build the random-walk based 2-section graph given hypergraph HG:
-```python
-G = HNX_2section(HG)
-```
-where G is an igraph Graph.
+## New functions (to be added in HNX hypergraph_modularity module)
 
-### Kumar clustering algorithm
+- _last_step_unweighted
+- _last_step_weighted
 
-Given hypergraph HG, compute a partition of the vertices as per Kumar's algorithm described in [1]:
-
-```python
-K = HNX_Kumar(HG, delta=.01)
-```
-
-where delta is the convergence stopping criterion. Partition is returned as a dictionary.
-
-### Hypergraph-based clustering
-
-Given hypergraph HG and initial partition L, compute a partition of the vertices as per Last-Step algorithm described in [2]:
-
-```python
-A = HNX_LastStep(HG, L, wdc=linear, delta = .01)
-```
-
-where 'wcd' is the the weight function (default = 'linear') and delta is the convergence stopping criterion. Returned partition is a list of sets.
-
-### Papers:
+# References:
 
 [1] Kumar T., Vaidyanathan S., Ananthapadmanabhan H., Parthasarathy S., Ravindran B. (2020) A New Measure of Modularity in Hypergraphs: Theoretical Insights and Implications for Effective Clustering. In: Cherifi H., Gaito S., Mendes J., Moro E., Rocha L. (eds) Complex Networks and Their Applications VIII. COMPLEX NETWORKS 2019. Studies in Computational Intelligence, vol 881. Springer, Cham. https://doi.org/10.1007/978-3-030-36687-2_24
 
