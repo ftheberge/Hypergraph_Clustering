@@ -10,8 +10,9 @@ HNX details can be found at: https://github.com/pnnl/HyperNetX
 # Required packages
 
 * ```pip install igraph```
+* ```pip install hypernetx```
   
-to install HyperNetX with the new modularity module:
+or to install HyperNetX with the new modularity module:
 * ```pip install git+https://github.com/ftheberge/HyperNetX.git@modularity#egg=hypernetx```
 
 # Summary of new/old functions for modularity and clustering
