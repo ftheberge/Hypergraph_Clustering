@@ -3,12 +3,16 @@ Modularity and clustering for hypergraphs using HyperNetX (HNX) representation
 
 **This new version is a re-write as of the new version 2 of HNX, tested with version 2.0.3**
 
+**Changes merged in this forked version of HyperNetX:** https://github.com/ftheberge/HyperNetX/tree/modularity
+
 HNX details can be found at: https://github.com/pnnl/HyperNetX
 
 # Required packages
 
-* pip install igraph
-* pip install hypernetx
+* ```pip install igraph```
+  
+to install HyperNetX with the new modularity module:
+* ```pip install git+https://github.com/ftheberge/HyperNetX.git@modularity#egg=hypernetx```
 
 # Summary of new/old functions for modularity and clustering
 
@@ -29,7 +33,7 @@ for example with a 1000-node graph, pre-computation takes 19s and modularity eva
 - two_section(HG)
 - kumar(HG, delta=0.01)
 
-## Functions no longer required (to be removed from HNX hypergraph_modularity module)
+## Functions no longer required (removed from HNX hypergraph_modularity module)
 
 - precompute_attributes(H)
 - _compute_partition_probas(HG, A)
@@ -39,12 +43,12 @@ for example with a 1000-node graph, pre-computation takes 19s and modularity eva
 - _bin_ppmf(d, c, p)
 - _delta_dt(HG, P, v, a, b, wdc)
 
-## Functions with new version (temporarily renamed with prefix “new_”; to be updated in HNX hypergraph_modularity module)
+## Functions with new version (updated in HNX hypergraph_modularity module)
 
 - modularity(HG, A, wdc=linear)
 - last_step(HG, L, wdc=linear, delta=0.01)
 
-## New functions (to be added in HNX hypergraph_modularity module)
+## New (hidden) functions (added in HNX hypergraph_modularity module)
 
 - _last_step_unweighted
 - _last_step_weighted
