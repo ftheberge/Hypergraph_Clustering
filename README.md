@@ -1,9 +1,9 @@
 # Hypergraph_Clustering
 Modularity and clustering for hypergraphs using HyperNetX (HNX) representation
 
-**This new version is a re-write as of the new version 2 of HNX, tested with version 2.0.3**
+**This is a legacy repo (up to HNX version 2.0.3)**
 
-**Changes merged in this forked version of HyperNetX:** https://github.com/ftheberge/HyperNetX/tree/modularity
+**Developments to the modularity module of HyperNetX are now in this forked version of HyperNetX:** https://github.com/ftheberge/HyperNetX/tree/modularity
 
 HNX details can be found at: https://github.com/pnnl/HyperNetX
 
